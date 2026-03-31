@@ -1,19 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap');
 
+/* ==========================================================================
+   DESIGN SYSTEM & THEME TOKENS
+   To change the theme, add `data-theme="light"` to the <html> tag.
+   ========================================================================== */
+
+/* 1. Primitive Colors (The Palette) */
 :root {
-  --bg-color: #181818;
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-tertiary: rgba(255, 255, 255, 0.4);
-  --accent-color: #0055FE;
-  --accent-hover: #004adf;
-  --error-color: #ff4d4f;
-  --bg-input: rgba(255, 255, 255, 0.1);
-  --bg-input-hover: rgba(255, 255, 255, 0.15);
+  /* Brand */
+  --blue-500: #0055FE;
+  --blue-600: #004adf;
   
+  /* Grayscale Dark */
+  --gray-900: #121212;
+  --gray-800: #181818;
+  --gray-700: #2b2b2b;
+  --gray-600: rgba(255, 255, 255, 0.4);
+  --gray-400: rgba(255, 255, 255, 0.7);
+  --gray-100: #ffffff;
+  
+  /* Grayscale Light */
+  --light-gray-900: #f8f9fa;
+  --light-gray-800: #ffffff;
+  --light-gray-700: #e9ecef;
+  --light-gray-600: rgba(0, 0, 0, 0.4);
+  --light-gray-400: rgba(0, 0, 0, 0.7);
+  --light-gray-100: #121212;
+
+  /* Utility */
+  --red-500: #ff4d4f;
+  
+  /* Typography */
   --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* 2. Semantic Theme Tokens (Default: Dark Mode) */
+:root {
+  --theme-bg: var(--gray-800);
+  --theme-bg-secondary: var(--gray-700);
+  
+  --theme-text-primary: var(--gray-100);
+  --theme-text-secondary: var(--gray-400);
+  --theme-text-tertiary: var(--gray-600);
+  
+  --theme-accent: var(--blue-500);
+  --theme-accent-hover: var(--blue-600);
+  
+  --theme-error: var(--red-500);
+  
+  --theme-input-bg: rgba(255, 255, 255, 0.1);
+  --theme-input-hover: rgba(255, 255, 255, 0.15);
+  --theme-input-focus-ring: rgba(0, 85, 254, 0.5);
+  
+  --theme-border: rgba(255, 255, 255, 0.2);
+}
+
+/* 3. Light Mode Overrides */
+:root[data-theme="light"] {
+  --theme-bg: var(--light-gray-900);
+  --theme-bg-secondary: var(--light-gray-800);
+  
+  --theme-text-primary: var(--light-gray-100);
+  --theme-text-secondary: var(--light-gray-400);
+  --theme-text-tertiary: var(--light-gray-600);
+  
+  /* You can change the accent color for light mode here if desired */
+  --theme-accent: var(--blue-500);
+  --theme-accent-hover: var(--blue-600);
+  
+  --theme-input-bg: rgba(0, 0, 0, 0.05);
+  --theme-input-hover: rgba(0, 0, 0, 0.08);
+  --theme-input-focus-ring: rgba(0, 85, 254, 0.2);
+  
+  --theme-border: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   GLOBAL STYLES
+   ========================================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -22,8 +86,8 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-primary);
+  background-color: var(--theme-bg);
+  color: var(--theme-text-primary);
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -41,7 +105,7 @@ button {
 
 input, textarea, select {
   font-family: var(--font-family);
-  color: var(--text-primary);
+  color: var(--theme-text-primary);
   background: none;
   border: none;
   outline: none;

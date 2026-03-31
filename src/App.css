@@ -59,7 +59,7 @@
 
 .question-number {
   font-size: 14px;
-  color: var(--accent-color);
+  color: var(--theme-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +67,7 @@
 }
 
 .question-asterisk {
-  color: var(--accent-color);
+  color: var(--theme-accent);
 }
 
 .ok-button-container {
@@ -79,7 +79,7 @@
 }
 
 .ok-button {
-  background-color: var(--accent-color);
+  background-color: var(--theme-accent);
   color: white;
   font-size: 18px;
   font-weight: 600;
@@ -92,12 +92,12 @@
 }
 
 .ok-button:hover {
-  background-color: var(--accent-hover);
+  background-color: var(--theme-accent-hover);
 }
 
 .press-enter {
   font-size: 12px;
-  color: var(--text-tertiary);
+  color: var(--theme-text-tertiary);
   display: flex;
   align-items: center;
   gap: 4px;
@@ -123,19 +123,19 @@
 .base-text-input {
   width: 100%;
   font-size: 24px;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--text-tertiary);
+  color: var(--theme-text-primary);
+  border-bottom: 1px solid var(--theme-text-tertiary);
   padding: 8px 0;
   padding-bottom: 12px;
   transition: border-color 0.2s;
 }
 
 .base-text-input:focus {
-  border-bottom-color: var(--accent-color);
+  border-bottom-color: var(--theme-accent);
 }
 
 .base-text-input::placeholder {
-  color: var(--text-tertiary);
+  color: var(--theme-text-tertiary);
 }
 
 /* Navigation Fixed Bottom Right */
@@ -151,14 +151,14 @@
 
 .nav-buttons {
   display: flex;
-  background-color: var(--bg-input);
+  background-color: var(--theme-input-bg);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .nav-button {
   padding: 8px 12px;
-  color: var(--text-primary);
+  color: var(--theme-text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,17 +166,17 @@
 }
 
 .nav-button:hover:not(:disabled) {
-  background-color: var(--bg-input-hover);
+  background-color: var(--theme-input-hover);
 }
 
 .nav-button:disabled {
-  color: var(--text-tertiary);
+  color: var(--theme-text-tertiary);
   cursor: not-allowed;
 }
 
 .nav-separator {
   width: 1px;
-  background-color: var(--text-tertiary);
+  background-color: var(--theme-text-tertiary);
   height: 24px;
   margin: auto 0;
 }
@@ -187,7 +187,7 @@
   bottom: 0;
   left: 0;
   height: 4px;
-  background-color: var(--accent-color);
+  background-color: var(--theme-accent);
   transition: width 0.3s ease;
   z-index: 100;
 }
@@ -204,7 +204,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: var(--bg-input);
+  background-color: var(--theme-input-bg);
   border: 1px solid transparent;
   padding: 12px 16px;
   border-radius: 4px;
@@ -216,12 +216,12 @@
 }
 
 .choice-item:hover {
-  background-color: var(--bg-input-hover);
+  background-color: var(--theme-input-hover);
 }
 
 .choice-item.selected {
   background-color: rgba(0, 85, 254, 0.1);
-  border-color: var(--accent-color);
+  border-color: var(--theme-accent);
 }
 
 .choice-letter {
@@ -238,8 +238,8 @@
 }
 
 .choice-item.selected .choice-letter {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
+  background-color: var(--theme-accent);
+  border-color: var(--theme-accent);
   color: white;
 }
 
@@ -249,7 +249,7 @@
 
 .choice-check {
   margin-left: auto;
-  color: var(--accent-color);
+  color: var(--theme-accent);
 }
 
 /* Dropdown styling */
@@ -261,31 +261,31 @@
 .dropdown-input-wrapper {
   position: relative;
   width: 100%;
-  border-bottom: 1px solid var(--text-secondary);
+  border-bottom: 1px solid var(--theme-text-secondary);
   padding-bottom: 8px;
   display: flex;
   align-items: center;
 }
 
 .dropdown-input-wrapper:focus-within {
-  border-bottom-color: var(--accent-color);
+  border-bottom-color: var(--theme-accent);
 }
 
 .dropdown-input {
   width: 100%;
   font-size: 24px;
-  color: var(--text-primary);
+  color: var(--theme-text-primary);
   background: none;
   border: none;
   outline: none;
 }
 
 .dropdown-input::placeholder {
-  color: var(--text-tertiary);
+  color: var(--theme-text-tertiary);
 }
 
 .dropdown-icon {
-  color: var(--text-tertiary);
+  color: var(--theme-text-tertiary);
   margin-left: 8px;
 }
 
@@ -296,7 +296,7 @@
   width: 100%;
   max-height: 240px;
   overflow-y: auto;
-  background-color: #2b2b2b;
+  background-color: var(--theme-bg-secondary);
   border-radius: 4px;
   margin-top: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -311,7 +311,7 @@
 }
 
 .dropdown-item:hover, .dropdown-item.highlighted {
-  background-color: var(--accent-color);
+  background-color: var(--theme-accent);
 }
 
 /* Contact Details group */
@@ -329,11 +329,11 @@
 
 .contact-label {
   font-size: 16px;
-  color: var(--text-secondary);
+  color: var(--theme-text-secondary);
 }
 
 .submit-button {
-  background-color: var(--accent-color);
+  background-color: var(--theme-accent);
   color: white;
   font-size: 18px;
   font-weight: 600;
@@ -345,18 +345,18 @@
 }
 
 .submit-button:hover {
-  background-color: var(--accent-hover);
+  background-color: var(--theme-accent-hover);
 }
 
 .long-text-hint {
   font-size: 12px;
-  color: var(--text-tertiary);
+  color: var(--theme-text-tertiary);
   margin-top: 8px;
 }
 
 /* Submit states */
 .submit-error {
-  color: #ff4d4f;
+  color: var(--theme-error);
   font-size: 14px;
   padding: 8px 12px;
   background-color: rgba(255, 77, 79, 0.1);
@@ -370,7 +370,7 @@
 }
 
 .submit-button:disabled:hover {
-  background-color: var(--accent-color);
+  background-color: var(--theme-accent);
 }
 
 .spinner {
