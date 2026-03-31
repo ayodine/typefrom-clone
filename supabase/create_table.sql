@@ -54,16 +54,25 @@ ALTER TABLE form_submissions ENABLE ROW LEVEL SECURITY;
 
 -- Grant table-level permissions to Supabase roles
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
-GRANT INSERT ON form_submissions TO anon;
-GRANT SELECT ON form_submissions TO authenticated;
+-- Important: The Supabase client calls .select() after .insert()
+-- So the anon role needs BOTH Insert and Select grants!
+GRANT INSERT, SELECT ON form_submissions TO anon;
 GRANT ALL ON form_submissions TO authenticated;
 
--- Policy: Allow anonymous inserts (public form, anyone can submit)
+-- Policy: Allow anonymous inserts (public form)
 CREATE POLICY "allow_anon_insert"
   ON form_submissions
   FOR INSERT
   TO anon
   WITH CHECK (true);
+
+-- Policy: Allow anonymous to read back the row they just inserted 
+-- (Needed because the Javascript client uses .select() after insert)
+CREATE POLICY "allow_anon_select"
+  ON form_submissions
+  FOR SELECT
+  TO anon
+  USING (true);
 
 -- Policy: Allow authenticated users to read all submissions
 CREATE POLICY "allow_authenticated_select"
