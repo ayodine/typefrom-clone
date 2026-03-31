@@ -255,11 +255,21 @@ function App() {
       <div className="app-container">
         <div className="questions-wrapper">
           <div className="question-section active">
-            <div className="question-content" style={{ textAlign: 'center' }}>
-              <div className="question-title" style={{ justifyContent: 'center' }}>
+            <div className="question-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
+              <div className="question-title" style={{ justifyContent: 'center', marginBottom: 0 }}>
                 <div>Thanks for completing this form! 🎉</div>
               </div>
-              <p style={{ color: 'var(--text-secondary)', fontSize: 18 }}>We'll review your application and get back to you soon.</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: 18, margin: 0 }}>
+                You're one step closer to consistent profitability. Let's get you on the calendar.
+              </p>
+              
+              <button 
+                className="submit-button" 
+                style={{ marginTop: '20px', width: 'auto', padding: '0 40px' }}
+                onClick={() => window.open('https://calendly.com/your-calendly-link', '_blank')}
+              >
+                Book Your Mentorship Call
+              </button>
             </div>
           </div>
         </div>
