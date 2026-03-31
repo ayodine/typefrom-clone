@@ -273,7 +273,18 @@ function App() {
               
               <button 
                 className="submit-button" 
-                style={{ marginTop: '20px', width: 'auto', padding: '0 40px' }}
+                style={{ 
+                  marginTop: '32px', 
+                  width: 'auto', 
+                  minWidth: '280px',
+                  padding: '16px 40px', 
+                  fontSize: '18px',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  boxShadow: '0 4px 14px 0 rgba(0, 85, 254, 0.39)'
+                }}
                 onClick={() => window.open('https://calendly.com/ayodine47/30min', '_blank')}
               >
                 Book Your Mentorship Call
