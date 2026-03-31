@@ -211,7 +211,7 @@ function App() {
 
   const BrandingHeader = () => (
     <div className="branding-header">
-      <img src="/logo.png" alt="Logo" className="branding-logo" />
+      <img src="/fav_dark.svg" alt="Logo" className="branding-logo" />
       <span className="branding-text">Swingtradefxacademy</span>
     </div>
   );
