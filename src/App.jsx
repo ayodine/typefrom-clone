@@ -266,7 +266,7 @@ function App() {
               <button 
                 className="submit-button" 
                 style={{ marginTop: '20px', width: 'auto', padding: '0 40px' }}
-                onClick={() => window.open('https://calendly.com/your-calendly-link', '_blank')}
+                onClick={() => window.open('https://calendly.com/ayodine47/30min', '_blank')}
               >
                 Book Your Mentorship Call
               </button>
