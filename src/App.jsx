@@ -93,7 +93,11 @@ function DropdownInput({ options, value, onSelect }) {
           onKeyDown={e => {
             if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true); setHl(h => Math.min(h + 1, filtered.length - 1)); }
             else if (e.key === 'ArrowUp') { e.preventDefault(); setHl(h => Math.max(h - 1, 0)); }
-            else if (e.key === 'Enter' && open && filtered[hl]) { e.preventDefault(); select(filtered[hl]); }
+            else if (e.key === 'Enter' && open) { 
+              e.preventDefault(); 
+              if (filtered[hl]) select(filtered[hl]); 
+              else if (search.trim()) select(search.trim());
+            }
           }}
         />
       </div>
@@ -103,7 +107,11 @@ function DropdownInput({ options, value, onSelect }) {
             <div key={opt} className={'dropdown-item' + (i === hl ? ' highlighted' : '')} onMouseEnter={() => setHl(i)} onClick={() => select(opt)}>
               {opt}
             </div>
-          )) : <div className="dropdown-item" style={{color:'var(--text-tertiary)'}}>No options found</div>}
+          )) : (
+            <div className="dropdown-item highlighted" onClick={() => search.trim() && select(search.trim())}>
+              Use "{search}"
+            </div>
+          )}
         </div>
       )}
       {value && !open && (
