@@ -209,6 +209,13 @@ function App() {
   const goNext = () => setActiveIndex(i => Math.min(i + 1, totalQ - 1));
   const goPrev = () => setActiveIndex(i => Math.max(i - 1, 0));
 
+  const BrandingHeader = () => (
+    <div className="branding-header">
+      <img src="/logo.png" alt="Logo" className="branding-logo" />
+      <span className="branding-text">Swingtradefxacademy</span>
+    </div>
+  );
+
   // Keyboard nav (arrows only when not in input)
   useEffect(() => {
     const handler = (e) => {
@@ -253,6 +260,7 @@ function App() {
   if (submitted) {
     return (
       <div className="app-container">
+        <BrandingHeader />
         <div className="questions-wrapper">
           <div className="question-section active">
             <div className="question-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
@@ -282,6 +290,7 @@ function App() {
 
   return (
     <div className="app-container" ref={containerRef}>
+      <BrandingHeader />
       <div className="questions-wrapper">
         {questions.map((q, idx) => {
           const isActive = idx === activeIndex;

@@ -381,3 +381,35 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* Branding Header */
+.branding-header {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 100;
+}
+
+.branding-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.branding-text {
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--theme-text-primary);
+}
+
+@media (max-width: 600px) {
+  .branding-header {
+    top: 20px;
+    left: 20px;
+  }
+}
