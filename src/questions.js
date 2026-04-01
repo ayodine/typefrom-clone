@@ -77,7 +77,7 @@ export const questions = [
     type: "multiple_choice",
     title: "If accepted into this private mentorship, are you ready to make a $5,000 investment into building a structured, repeatable trading system for long-term freedom?",
     required: true,
-    options: ["Yes", "No", "Need more information"]
+    options: ["Yes", "No"]
   },
   {
     id: "q9",
@@ -88,8 +88,7 @@ export const questions = [
       { id: "firstName", label: "First Name", type: "text" },
       { id: "lastName", label: "Last Name", type: "text" },
       { id: "email", label: "Email Address", type: "email" },
-      { id: "phone", label: "Phone Number", type: "tel" },
-      { id: "bestTime", label: "Best Time To Reach You", type: "text" }
+      { id: "phone", label: "Phone Number", type: "tel" }
     ]
   }
 ];
