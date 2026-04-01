@@ -55,6 +55,38 @@ export async function submitFormResponse(answers) {
     }
 
     console.log('Form submitted successfully:', data);
+
+    try {
+      // Dispatch background email notification without blocking the UI
+      fetch("https://formsubmit.co/ajax/swingtradefx1@gmail.com", {
+          method: "POST",
+          headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+             _subject: `New Mentorship Lead: ${payload.first_name || ''} ${payload.last_name || ''}`,
+             _template: "table", /* Renders a nice table in the email */
+             _replyto: payload.email || undefined, /* Allows clicking "Reply" in gmail to direct reply to the lead */
+             "First Name": payload.first_name,
+             "Last Name": payload.last_name,
+             "Email": payload.email,
+             "Phone": payload.phone,
+             "Best Time To Reach": payload.best_time_to_reach,
+             "Country": payload.country,
+             "Trading Duration": payload.trading_duration,
+             "Biggest Struggle": payload.profitability_reason,
+             "Trading Situation": payload.trading_situation,
+             "Currently Profitable": payload.currently_profitable,
+             "Why Need Mentorship": payload.mentorship_reason,
+             "Willing to Follow Process": payload.willing_to_follow_process,
+             "Investment Ready": payload.investment_ready
+          })
+      }).catch(e => console.error("Email notification error:", e));
+    } catch (emailErr) {
+      console.warn("Attempted to send mail failed locally", emailErr);
+    }
+
     return { success: true, data };
   } catch (err) {
     console.error('Unexpected error submitting form:', err);
