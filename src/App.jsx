@@ -294,7 +294,7 @@ function App() {
                   alignSelf: 'center',
                   boxShadow: '0 4px 14px 0 rgba(0, 85, 254, 0.39)'
                 }}
-                onClick={() => window.open('https://calendly.com/ayodine47/30min', '_blank')}
+                onClick={() => window.open('https://calendly.com/swingtradefx1/', '_blank')}
               >
                 Book Your Mentorship Call
               </button>
