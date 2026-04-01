@@ -58,16 +58,17 @@ export async function submitFormResponse(answers) {
 
     try {
       // Dispatch background email notification without blocking the UI
-      fetch("https://formsubmit.co/ajax/swingtradefx1@gmail.com", {
+      fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: { 
               'Content-Type': 'application/json',
               'Accept': 'application/json'
           },
           body: JSON.stringify({
-             _subject: `New Mentorship Lead: ${payload.first_name || ''} ${payload.last_name || ''}`,
-             _template: "table", /* Renders a nice table in the email */
-             _replyto: payload.email || undefined, /* Allows clicking "Reply" in gmail to direct reply to the lead */
+             access_key: "d11ddcb6-f66f-4d5f-88ba-9b6126b6ff37",
+             subject: `New Mentorship Lead: ${payload.first_name || ''} ${payload.last_name || ''}`,
+             from_name: "Mentorship Application",
+             replyto: payload.email || undefined, /* Allows clicking "Reply" in gmail to direct reply to the lead */
              "First Name": payload.first_name,
              "Last Name": payload.last_name,
              "Email": payload.email,
