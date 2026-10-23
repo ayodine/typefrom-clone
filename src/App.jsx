@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronUp, ChevronDown, Check, Loader2 } from 'lucide-react';
 import { questions } from './questions';
 import { submitFormResponse } from './supabase';
+import AdminDashboard from './components/AdminDashboard';
 import './App.css';
 
 /* ──────────────────────── Error Boundary ──────────────────────── */
@@ -205,7 +206,27 @@ function ContactInput({ fields, value, onChangeValue, onDone, submitting, submit
 
 /* ──────────────────────── Main App ──────────────────────── */
 
+const BrandingHeader = ({ onLogoAltClick }) => (
+  <div className="branding-header">
+    <img 
+      src="/fav_dark.svg" 
+      alt="Logo" 
+      className="branding-logo" 
+      onClick={(e) => {
+        if (e.altKey) {
+          e.preventDefault();
+          onLogoAltClick();
+        }
+      }}
+      style={{ cursor: 'pointer' }}
+      title="Hold Alt/Option and click to open Admin Portal"
+    />
+    <span className="branding-text">Swingtradefxacademy</span>
+  </div>
+);
+
 function App() {
+  const [view, setView] = useState('form'); // 'form' | 'admin'
   const [activeIndex, setActiveIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -214,18 +235,38 @@ function App() {
   const containerRef = useRef(null);
   const totalQ = questions.length;
 
-  const goNext = () => setActiveIndex(i => Math.min(i + 1, totalQ - 1));
-  const goPrev = () => setActiveIndex(i => Math.max(i - 1, 0));
+  // Simple routing listener
+  useEffect(() => {
+    const checkRoute = () => {
+      const isAdmin = window.location.search.includes('admin=true') || window.location.hash === '#admin';
+      setView(isAdmin ? 'admin' : 'form');
+    };
+    checkRoute();
+    window.addEventListener('popstate', checkRoute);
+    window.addEventListener('hashchange', checkRoute);
+    return () => {
+      window.removeEventListener('popstate', checkRoute);
+      window.removeEventListener('hashchange', checkRoute);
+    };
+  }, []);
 
-  const BrandingHeader = () => (
-    <div className="branding-header">
-      <img src="/fav_dark.svg" alt="Logo" className="branding-logo" />
-      <span className="branding-text">Swingtradefxacademy</span>
-    </div>
-  );
+  const navigateToAdmin = () => {
+    window.location.hash = 'admin';
+    setView('admin');
+  };
+
+  const navigateToForm = () => {
+    window.history.pushState("", document.title, window.location.pathname);
+    window.location.hash = '';
+    setView('form');
+  };
+
+  const goNext = useCallback(() => setActiveIndex(i => Math.min(i + 1, totalQ - 1)), [totalQ]);
+  const goPrev = useCallback(() => setActiveIndex(i => Math.max(i - 1, 0)), []);
 
   // Keyboard nav (arrows only when not in input)
   useEffect(() => {
+    if (view === 'admin') return;
     const handler = (e) => {
       const tag = document.activeElement?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
@@ -234,10 +275,11 @@ function App() {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, []);
+  }, [goNext, goPrev, view]);
 
   // Wheel debounce
   useEffect(() => {
+    if (view === 'admin') return;
     let t;
     const handler = (e) => {
       if (t) return;
@@ -249,7 +291,7 @@ function App() {
     const el = containerRef.current;
     if (el) el.addEventListener('wheel', handler, { passive: true });
     return () => { if (el) el.removeEventListener('wheel', handler); };
-  }, []);
+  }, [goNext, goPrev, view]);
 
   const setAnswer = (id, val) => setAnswers(prev => ({ ...prev, [id]: val }));
 
@@ -265,10 +307,14 @@ function App() {
     }
   };
 
+  if (view === 'admin') {
+    return <AdminDashboard onBackToForm={navigateToForm} />;
+  }
+
   if (submitted) {
     return (
       <div className="app-container">
-        <BrandingHeader />
+        <BrandingHeader onLogoAltClick={navigateToAdmin} />
         <div className="questions-wrapper">
           <div className="question-section active">
             <div className="question-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
@@ -294,7 +340,7 @@ function App() {
                   alignSelf: 'center',
                   boxShadow: '0 4px 14px 0 rgba(0, 85, 254, 0.39)'
                 }}
-                onClick={() => window.open('https://calendly.com/swingtradefx1/20min', '_blank')}
+                onClick={() => window.open('https://calendly.com/swingtradefx1/30min?month=2026-10', '_blank')}
               >
                 Book Your Mentorship Call
               </button>
@@ -310,7 +356,7 @@ function App() {
 
   return (
     <div className="app-container" ref={containerRef}>
-      <BrandingHeader />
+      <BrandingHeader onLogoAltClick={navigateToAdmin} />
       <div className="questions-wrapper">
         {questions.map((q, idx) => {
           const isActive = idx === activeIndex;
@@ -376,6 +422,13 @@ function App() {
       </div>
 
       <div className="progress-bar" style={{ width: progress + '%' }} />
+      <div 
+        className="admin-view-toggle" 
+        onClick={navigateToAdmin}
+        title="Admin login portal"
+      >
+        Admin Portal
+      </div>
     </div>
   );
 }

@@ -41,7 +41,11 @@ CREATE TABLE form_submissions (
   last_name             TEXT,
   email                 TEXT,
   phone                 TEXT,
-  best_time_to_reach    TEXT
+  best_time_to_reach    TEXT,
+
+  -- Lead Management Fields
+  status                TEXT DEFAULT 'New' NOT NULL,
+  notes                 TEXT DEFAULT '' NOT NULL
 );
 
 -- ============================================================
@@ -54,9 +58,8 @@ ALTER TABLE form_submissions ENABLE ROW LEVEL SECURITY;
 
 -- Grant table-level permissions to Supabase roles
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
--- Important: The Supabase client calls .select() after .insert()
--- So the anon role needs BOTH Insert and Select grants!
-GRANT INSERT, SELECT ON form_submissions TO anon;
+-- The anon role only needs INSERT permissions for the public lead-generation form
+GRANT INSERT ON form_submissions TO anon;
 GRANT ALL ON form_submissions TO authenticated;
 
 -- Policy: Allow anonymous inserts (public form)
@@ -66,18 +69,25 @@ CREATE POLICY "allow_anon_insert"
   TO anon
   WITH CHECK (true);
 
--- Policy: Allow anonymous to read back the row they just inserted 
--- (Needed because the Javascript client uses .select() after insert)
-CREATE POLICY "allow_anon_select"
-  ON form_submissions
-  FOR SELECT
-  TO anon
-  USING (true);
-
 -- Policy: Allow authenticated users to read all submissions
 CREATE POLICY "allow_authenticated_select"
   ON form_submissions
   FOR SELECT
+  TO authenticated
+  USING (true);
+
+-- Policy: Allow authenticated users to update submissions (status, notes)
+CREATE POLICY "allow_authenticated_update"
+  ON form_submissions
+  FOR UPDATE
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
+
+-- Policy: Allow authenticated users to delete submissions
+CREATE POLICY "allow_authenticated_delete"
+  ON form_submissions
+  FOR DELETE
   TO authenticated
   USING (true);
 

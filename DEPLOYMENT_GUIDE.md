@@ -15,10 +15,10 @@ This document serves as the memory and blueprint for how this project was built,
 ### Row Level Security (RLS)
 The most critical part of this application's architecture is the Supabase RLS configuration. Since this is a client-side only React app, we expose the **Publishable `anon` Key** to the world. 
 
-To prevent hackers from changing data, the `form_submissions` table has RLS enabled with very specific rules:
-1. The `anon` role is granted `INSERT` and `SELECT` permissions on the table.
-2. The RLS policy explicitly allows the `anon` role to `INSERT` new rows.
-3. *Crucial fix*: Since the React code does `await supabase...insert().select()`, the database *must* also allow the `anon` role to `SELECT` the row it just created.
+To prevent hackers from reading or altering data, the `form_submissions` table has RLS enabled with strict write-only policies:
+1. The `anon` role is granted ONLY `INSERT` permissions on the table (with no `SELECT` or `UPDATE` permissions).
+2. The RLS policy explicitly allows the `anon` role to `INSERT` new rows, but blocks all reading of entries to prevent database scraping.
+3. React code submits data using `.insert()` without `.select()`, ensuring standard database interactions operate securely on public clients.
 
 If you ever need to recreate the database, the exact bulletproof SQL script is saved in `supabase/create_table.sql`.
 
@@ -65,7 +65,7 @@ Because this is a Single Page Application (SPA), we need to tell Netlify to redi
 ---
 
 ## Notable Features & Upgrades
-- **Calendly Integration**: On the final success screen (rendered in `src/App.jsx` when `submitted === true`), there is a "Book Your Mentorship Call" button. It is currently hardcoded to `https://calendly.com/swingtradefx1/`. If your Calendly link changes in the future, search for that URL in `App.jsx` and replace it.
+- **Calendly Integration**: On the final success screen (rendered in `src/App.jsx` when `submitted === true`), there is a "Book Your Mentorship Call" button. It is currently set to `https://calendly.com/swingtradefx1/30min?month=2026-10`. If your Calendly link changes in the future, search for that URL in `App.jsx` and replace it.
 - **Dynamic Custom Country Dropdown**: The first question uses a specialized autocomplete dropdown. If a user types a country that is not in the predefined list (e.g., "Antarctica"), the code dynamically generates an option `Use "Antarctica"`. Pressing Enter accepts this exact string and saves it directly to the database.
 - **Swingtradefxacademy Branding**: A permanent branding header containing the logo (`public/fav_dark.svg`) and brand title lives in the top-left corner of the app, ensuring context is never lost during the multi-step form. 
 - **CSS Design System Architecture**: The entire application's styling uses a robust CSS Custom Properties (Variables) architecture stored in `src/index.css`. 
